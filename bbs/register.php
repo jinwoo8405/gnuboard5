@@ -1,6 +1,7 @@
 <?php
 include_once('./_common.php');
-
+$group['subject'] = "회원";
+$group2['subject'] = "회원가입";
 // 로그인중인 경우 회원가입 할 수 없습니다.
 if ($is_member) {
     goto_url(G5_URL);
@@ -16,3 +17,4 @@ $register_action_url = G5_BBS_URL.'/register_form.php';
 include_once($member_skin_path.'/register.skin.php');
 
 include_once('./_tail.php');
+?>

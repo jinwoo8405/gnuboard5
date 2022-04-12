@@ -182,6 +182,7 @@ if ($is_search_bbs) {
 
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
+
     $result = sql_query($sql);
 
     $k = 0;

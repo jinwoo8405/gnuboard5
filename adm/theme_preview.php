@@ -147,22 +147,22 @@ require_once(G5_PATH.'/head.sub.php');
 <link rel="stylesheet" href="<?php echo G5_ADMIN_URL; ?>/css/theme.css">
 <script src="<?php echo G5_ADMIN_URL; ?>/theme.js"></script>
 
-<section id="preview_item">
-    <ul>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_index; ?>">인덱스 화면</a></li>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_list; ?>">게시글 리스트</a></li>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_view; ?>">게시글 보기</a></li>
-        <?php if(defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
-        <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_shop; ?>">쇼핑몰</a></li>
-        <?php } ?>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_ca_list; ?>">상품리스트</a></li>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_item; ?>">상품상세</a></li>
-        <?php } ?>
-        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_device; ?>"><?php echo (G5_IS_MOBILE ? 'PC 버전' : '모바일 버전'); ?></a></li>
-        <?php echo $btn_active; ?>
-    </ul>
-</section>
+<!-- <section id="preview_item"> -->
+<!--     <ul> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_index; ?>">인덱스 화면</a></li> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_list; ?>">게시글 리스트</a></li> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_view; ?>">게시글 보기</a></li> -->
+<!--         <?php if(defined('G5_USE_SHOP') && G5_USE_SHOP) { ?> -->
+<!--         <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_shop; ?>">쇼핑몰</a></li> -->
+<!--         <?php } ?> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_ca_list; ?>">상품리스트</a></li> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_item; ?>">상품상세</a></li> -->
+<!--         <?php } ?> -->
+<!--         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_device; ?>"><?php echo (G5_IS_MOBILE ? 'PC 버전' : '모바일 버전'); ?></a></li> -->
+<!--         <?php echo $btn_active; ?> -->
+<!--     </ul> -->
+<!-- </section> -->
 
 <section id="preview_content">
     <?php

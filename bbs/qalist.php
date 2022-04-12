@@ -1,25 +1,18 @@
 <?php
 include_once('./_common.php');
-
+$group['subject'] = "문의";
+$group2['subject'] = "1:1문의";
 if($is_guest)
     alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qalist.php'));
 
 $qaconfig = get_qa_config();
 
-$token = '';
-if( $is_admin ){
-    $token = _token();
-    set_session('ss_qa_delete_token', $token);
-}
-
 $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');
 
 $skin_file = $qa_skin_path.'/list.skin.php';
-$is_auth = $is_admin ? true : false;
 
 $category_option = '';
-
 if ($qaconfig['qa_category']) {
     $category_href = G5_BBS_URL.'/qalist.php';
 
@@ -58,33 +51,15 @@ if(is_file($skin_file)) {
 
     $stx = trim($stx);
     if($stx) {
-        $sfl = trim($sfl);
-        if ($sfl) {
-            switch ($sfl) {
-                case "qa_subject" :
-                case "qa_content" :
-                case "qa_name" :
-                case "mb_id" :
-                    break;
-                default : 
-                    $sfl = "qa_subject";
-            }
-        } else {
-            $sfl = "qa_subject";
-        }
-        $sql_search .= " and (`{$sfl}` like '%{$stx}%') ";
+        if (preg_match("/[a-zA-Z]/", $stx))
+            $sql_search .= " and ( INSTR(LOWER(qa_subject), LOWER('$stx')) > 0 or INSTR(LOWER(qa_content), LOWER('$stx')) > 0 )";
+        else
+            $sql_search .= " and ( INSTR(qa_subject, '$stx') > 0 or INSTR(qa_content, '$stx') > 0 ) ";
     }
-    // $stx = trim($stx);
-    // if($stx) {
-    //     if (preg_match("/[a-zA-Z]/", $stx))
-    //         $sql_search .= " and ( INSTR(LOWER(qa_subject), LOWER('$stx')) > 0 or INSTR(LOWER(qa_content), LOWER('$stx')) > 0 )";
-    //     else
-    //         $sql_search .= " and ( INSTR(qa_subject, '$stx') > 0 or INSTR(qa_content, '$stx') > 0 ) ";
-    // }
 
     $sql_order = " order by qa_num ";
 
-    $sql = " select count(*) as cnt 
+    $sql = " select count(*) as cnt
                 $sql_common
                 $sql_search ";
     $row = sql_fetch($sql);
@@ -147,3 +122,4 @@ if(is_file($skin_file)) {
 }
 
 include_once('./qatail.php');
+?>

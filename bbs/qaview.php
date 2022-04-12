@@ -1,18 +1,13 @@
 <?php
 include_once('./_common.php');
+$group['subject'] = "문의";
+$group2['subject'] = "1:1문의";
 include_once(G5_EDITOR_LIB);
-
-$qa_id = isset($_REQUEST['qa_id']) ? (int) $_REQUEST['qa_id'] : 0;
 
 if($is_guest)
     alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qaview.php?qa_id='.$qa_id));
 
 $qaconfig = get_qa_config();
-$content = '';
-
-$token = _token();
-set_session('ss_qa_delete_token', $token);
-set_session('ss_qa_write_token', $token);
 
 $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');
@@ -27,7 +22,7 @@ if(is_file($skin_file)) {
 
     $view = sql_fetch($sql);
 
-    if(!(isset($view['qa_id']) && $view['qa_id']))
+    if(!$view['qa_id'])
         alert('게시글이 존재하지 않습니다.\\n삭제되었거나 자신의 글이 아닌 경우입니다.');
 
     $subject_len = G5_IS_MOBILE ? $qaconfig['qa_mobile_subject_len'] : $qaconfig['qa_subject_len'];
@@ -114,9 +109,9 @@ if(is_file($skin_file)) {
             $update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$view['qa_id'].$qstr;
     }
     */
-
     if(($view['qa_type'] && $is_admin) || (!$view['qa_type'] && $view['qa_status'] == 0)) {
         $update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$view['qa_id'].$qstr;
+        set_session('ss_qa_delete_token', $token = uniqid(time()));
         $delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$view['qa_id'].'&amp;token='.$token.$qstr;
     }
 
@@ -133,7 +128,7 @@ if(is_file($skin_file)) {
 
         if($is_admin) {
             $answer_update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$answer['qa_id'].$qstr;
-            $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].'&amp;token='.$token.$qstr;
+            $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].$qstr;
         }
     }
 
@@ -175,19 +170,10 @@ if(is_file($skin_file)) {
         }
     }
 
-    $html_value = '';
-    $html_checked = '';
-    if (isset($view['qa_html']) && $view['qa_html']) {
-        $html_checked = 'checked';
-        $html_value = $view['qa_html'];
-
-        if($view['qa_html'] == 1 && !$is_dhtml_editor)
-            $html_value = 2;
-    }
-
     include_once($skin_file);
 } else {
     echo '<div>'.str_replace(G5_PATH.'/', '', $skin_file).'이 존재하지 않습니다.</div>';
 }
 
 include_once('./qatail.php');
+?>

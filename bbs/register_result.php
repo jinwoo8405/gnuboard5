@@ -1,5 +1,7 @@
 <?php
 include_once('./_common.php');
+$group['subject'] = "회원";
+$group2['subject'] = "회원가입완료";
 
 if (isset($_SESSION['ss_mb_reg']))
     $mb = get_member($_SESSION['ss_mb_reg']);
@@ -12,3 +14,4 @@ $g5['title'] = '회원가입 완료';
 include_once('./_head.php');
 include_once($member_skin_path.'/register_result.skin.php');
 include_once('./_tail.php');
+?>
